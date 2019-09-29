@@ -29,13 +29,19 @@ What would be the point of seeing answered and unanswered polling questions if w
 When a poll is clicked on the home page, the following is shown:
 
 Text “Would You Rather”;
+
 Avatar of the user who posted the polling question; and
+
 Two options.
+
 For answered polls, each of the two options contains the following:
 
 Text of the option;
+
 Number of people who voted for that option; and
+
 Percentage of people who voted for that option.
+
 The option selected by the logged-in user should be clearly marked.
 
 Since we want to make sure our application creates a good user experience, the application should show a 404 page if the user is trying to access a poll that does not exist. (Please keep in mind that newly created polls will not be accessible at their url because of the way the backend is set up in this application.) It should also display a navigation bar so that the user can easily navigate anywhere in the application.
@@ -47,9 +53,13 @@ It would be no fun to vote in polls if we couldn’t post our own questions! The
 But how can we know how many questions each user has asked and answered? Let’s get some healthy competition going here! The application should have a leaderboard that’s available at the /leaderboard route. Each entry on the leaderboard should contain the following:
 
 User’s name;
+
 User’s picture;
+
 Number of questions the user asked; and
+
 Number of questions the user answered
+
 Users should be ordered in descending order based on the sum of the number of questions they’ve asked and the number of questions they’ve answered. The more questions you ask and answer, the higher up you move.
 
 The user should be able to navigate to the leaderboard, to a specific question, and to the form that allows the user to create a new poll both from within the app and by typing in the address into the address bar. To make sure we’re showing the data that is relevant to the user, the application should require the user to be signed in order to access those pages.
@@ -63,6 +73,8 @@ For this application, most of the application’s state should be managed by Red
 Your application’s store should be the source of truth, and components should read the necessary state from the store instead of having their own versions of the same state. There should be no direct API calls in components’ lifecycle methods, and updates should be triggered by dispatching action creators.
 
 Your application’s code should be structured and organized in a logical way, and your components should be modular and reusable.
+
+---
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -132,3 +144,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+```
+
+```
