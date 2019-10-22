@@ -1,10 +1,9 @@
-import { SET_QUESTIONS, SET_ANSWER } from "../util/constants";
-import { strictEqual } from "assert";
+import { SET_QUESTIONS, SET_ANSWER, ADD_QUESTION } from "../util/constants";
 
 export default function questions(state = {}, action) {
   switch (action.type) {
     case SET_QUESTIONS:
-      return state.concat(...state, action.questions);
+      return { ...state, ...action.questions };
     case SET_ANSWER:
       return state;
     case ADD_QUESTION:

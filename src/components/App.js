@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { handleInitializeData } from "../actions/shared";
-import Login from "./Login";
+import Polls from "./Polls";
+import Poll from "./Poll";
 import { connect } from "react-redux";
+import { Route } from "react-router-dom";
 
 class App extends Component {
   componentDidMount() {
@@ -10,7 +12,8 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Login />
+        <Route exact path="/" component={Polls} />
+        <Route path="poll/:id" component={Poll} />
       </div>
     );
   }
