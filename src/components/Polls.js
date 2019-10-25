@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function mapStateToProps({ questions, authedUser }) {
+  //TODO: delete test data
   const testUser = "tylermcginnis";
   const polls = Object.values(questions);
   const answered = polls.filter(
@@ -20,27 +21,17 @@ function mapStateToProps({ questions, authedUser }) {
 
 class Polls extends Component {
   state = {
-    toggle: "unanswered",
-    pollID: ""
+    toggle: "unanswered"
   };
 
   handleClick = list => {
     this.setState({ toggle: list });
   };
 
-  toPoll = id => {
-    this.setState({
-      pollID: id
-    });
-  };
   render() {
     const { answered, unanswered } = this.props;
-    const { pollID, toggle } = this.state;
+    const { toggle } = this.state;
     const currentList = toggle === "unanswered" ? unanswered : answered;
-
-    if (pollID !== "") {
-      return <Redirect to={"poll/" + pollID} />;
-    }
 
     return (
       <div>
@@ -52,9 +43,12 @@ class Polls extends Component {
         </div>
         {currentList.map(p => {
           //TODO: add event to navigate to Poll
+          console.log(p.id);
           return (
-            <div key={p.id} onClick={() => this.toPoll(p.id)}>
-              ...{p.optionOne.text.substring(0, 15)}...
+            <div key={p.id}>
+              <Link to={`/poll/${p.id}`}>
+                ...{p.optionOne.text.substring(0, 15)}...
+              </Link>
             </div>
           );
         })}

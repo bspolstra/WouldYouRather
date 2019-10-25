@@ -1,24 +1,28 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { get } from "lodash";
+import { Redirect } from "react-router-dom";
 
-function mapStateToProps({ questions, users, authedUser }, { id }) {
+function mapStateToProps({ questions, users, authedUser }, { match }) {
+  console.log(match);
+  var id = match.params.id;
+
   const userID = get(questions[id], "author");
-  console.log(id);
   return {
     optionOne: get(questions[id], "optionOne.text"),
     optionTwo: get(questions[id], "optionTwo.text"),
     author: users[userID],
-    authedUser: users[authedUser]
+    authedUser: users[authedUser],
+    id
   };
 }
 
 class Poll extends Component {
+  //TODO build out the handleClick to save the authedUser'choice
   handleClick = option => {};
 
   render() {
-    const { optionOne, optionTwo, author } = this.props;
-
+    const { optionOne, optionTwo, author, id } = this.props;
     if (author) {
       const { name, avatarURL } = author;
       return (
@@ -32,7 +36,8 @@ class Poll extends Component {
         </div>
       );
     } else {
-      return <div></div>;
+      console.log(id);
+      return <Redirect to={{ pathname: "/notfound", state: { id } }} />;
     }
   }
 }

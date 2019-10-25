@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { setAuthedUser } from "../actions/authedUser";
+import { Redirect } from "react-router-dom";
 
 class Login extends Component {
   state = {
-    selectedValue: ""
+    selectedValue: "",
+    redirect: false
   };
 
   handleChange = e => {
@@ -15,15 +17,22 @@ class Login extends Component {
     const { selectedValue } = this.state;
     if (selectedValue !== "") {
       this.props.dispatch(setAuthedUser(selectedValue));
+      this.setState({ redirect: true });
     }
   };
   render() {
     const { users } = this.props;
+    const { redirect } = this.state;
+    console.log(redirect);
+    if (redirect) {
+      return <Redirect to="/" />;
+    }
+
     return (
       <div>
         <div>
           <select onChange={e => this.handleChange(e)}>
-            <option key="" value="" selected></option>
+            <option key="" value=""></option>
             {users.map(user => (
               <option key={user.id} value={user.id}>
                 {user.name}
