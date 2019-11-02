@@ -17,7 +17,6 @@ function mapStateToProps({ questions, users, authedUser }, { match }) {
     optionOne: get(questions[id], "optionOne.text"),
     optionTwo: get(questions[id], "optionTwo.text"),
     author: users[get(questions[id], "author")],
-    authedUser: users[authedUser],
     id,
     userCount: Object.keys(users).length,
     optionOneVoteCount: optionOneVotes.length,
@@ -30,7 +29,6 @@ function mapStateToProps({ questions, users, authedUser }, { match }) {
 class Poll extends Component {
   handleClick = option => {
     const { dispatch, authedUser, id } = this.props;
-    console.log(id);
     dispatch(handleSaveAnswer(authedUser, id, option));
   };
 
@@ -98,10 +96,10 @@ class Poll extends Component {
       return <Redirect to={{ pathname: "/notfound", state: { id } }} />;
     }
 
-    const { name } = author;
-
+    const { name, avatarURL } = author;
     return (
       <Fragment>
+        <img src={avatarURL} alt={`Avatar of ${name}`} className="avatar" />
         <p>Asked by {name}</p>
         {authedUserVote
           ? this.answeredPoll(this.props)
