@@ -1,15 +1,16 @@
 This is the second project as per the Udacity's React Nanodegree program, which focus on understanding and using the Redux as the application state management as well as its relationship with React framework.
 
 This README.md is divided into three sections:
-*Installation & Run Instructions
-*Thought Processes on the Project
-\*Udacity's Project Overview
+-Installation & Run Instructions
+-Thought Processes on the Project
+-Udacity's Project Overview
 
 ## Installation & Run Instructions
 
 You can run this application by following the steps below:
-_ `npm install`
-_ `npm start`
+
+1. `npm install`
+2. `npm start`
 
 ## Thought Processes on the Project
 
