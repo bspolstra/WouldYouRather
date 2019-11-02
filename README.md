@@ -14,6 +14,16 @@ You can run this application by following the steps below:
 
 ## Thought Processes on the Project
 
+This has been a challenging project with a few key points to think about:
+
+1. Destructuring the state in each reducer. It must be done without mutating it. It's easy to get a whole set of state and then add a new node. It gets harder when you want to get into the far end of the tiny node of an object within the state. For instance, when you want to save a vote, you'll want to find an object matching the voted poll's ID, identify which option being voted upon, and add the authenticated user's name in the 'votes' node. The further out the node from the root node, the more complex the destructuring becomes, the harder it is to read and code. I wonder if there is a better approach to reduce the complexity. `lodash` package has been really useful, but will it work with destructuring? This will be a future mini-project to take on.
+
+2. Passing the parameters to a child component is tricky, especially when the Router component works with login process. After searching online and consulting with a couple of seniors for an answer, I come to learn that the props can be successfully passed onto a child component via the Route component's `render` method. It seems that it is the only way to accomplish the pass.
+
+3. Now that I need to get creative with the styling of the application, instead of making it from scratch, I search through the Internet for a theme to integrate into the application. I'm not exactly what you would call an artist. As long as it gets the job done, I'll take it. The theme is called Litera, which is borrowed from Bootswatch (see link: https://bootswatch.com/litera/).
+
+4. Finally, but not the least, the planning of a project turns out one of the critical weaknesses. It has taken me so long to determine what's what, and break them all down into steps. I'm grateful that the plan is laid out in Udacity, making it easier for me to follow. I should start with a mocked interface, and break it down into components, and then determine the hierarch of the components, events and state in this order. Once I start coding, I start with the state and work my way back up, but then end up jumping between the steps. Should I start to code the components first instead? Or should the state come first? Or should I follow the steps of the original plan? All in all, this process has been detrimental to my confidence in my ability to plan.
+
 ## Udacity's Project Overview
 
 In the "Would You Rather?" Project, you'll build a web app that lets a user play the “Would You Rather?” game. The game goes like this: A user is asked a question in the form: “Would you rather [option A] or [option B] ?”. Answering "neither" or "both" is against the rules.
