@@ -11,8 +11,10 @@ function mapStateToProps({ questions, authedUser }) {
   );
 
   return {
-    answered,
-    unanswered: polls.filter(q => !answered.includes(q))
+    answered: answered.sort((a, b) => b.timestamp - a.timestamp),
+    unanswered: polls
+      .filter(q => !answered.includes(q))
+      .sort((a, b) => b.timestamp - a.timestamp)
   };
 }
 
@@ -21,8 +23,8 @@ class Polls extends Component {
     toggle: "unanswered"
   };
 
-  handleClick = list => {
-    this.setState({ toggle: list });
+  handleClick = newList => {
+    this.setState({ toggle: newList });
   };
 
   render() {
@@ -41,7 +43,7 @@ class Polls extends Component {
         {currentList.map(p => {
           return (
             <div key={p.id}>
-              <Link to={`/poll/${p.id}`}>
+              <Link to={`/questions/${p.id}`}>
                 ...{p.optionOne.text.substring(0, 15)}...
               </Link>
             </div>
