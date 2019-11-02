@@ -23,7 +23,6 @@ class Login extends Component {
   render() {
     const { users } = this.props;
     const { redirect } = this.state;
-    console.log(redirect);
     if (redirect) {
       return <Redirect to="/" />;
     }

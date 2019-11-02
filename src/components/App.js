@@ -17,20 +17,22 @@ class App extends Component {
 
   render() {
     const { loggedIn } = this.props;
-    console.log(this.props);
     return (
       <div>
         <Nav />
         <Route exact path="/">
           {loggedIn ? <Polls /> : <Redirect to="/login" />}
         </Route>
-        <Route path="/poll/:id">
-          {loggedIn ? <Poll /> : <Redirect to="/login" />}
-        </Route>
+        <Route
+          path="/poll/:id"
+          render={props =>
+            loggedIn ? <Poll {...props} /> : <Redirect to="/login" />
+          }
+        />
         <Route path="/leaderboard">
           {loggedIn ? <Leaderboard /> : <Redirect to="/login" />}
         </Route>
-        <Route path="/create">
+        <Route path="/add">
           {loggedIn ? <CreateQuestion /> : <Redirect to="/login" />}
         </Route>
         <Route path="/login" component={Login} />
