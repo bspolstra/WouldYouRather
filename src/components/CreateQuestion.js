@@ -1,21 +1,38 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { handleCreateQuestion } from "../actions/questions";
+import { Redirect } from "react-router-dom";
 
 class CreateQuestion extends Component {
   constructor(props) {
     super(props);
 
-    this.inputOptionOne = React.createRef();
-    this.inputOptionTwo = React.createRef();
+    this.state = {
+      inputOptionOne: React.createRef(),
+      inputOptionTwo: React.createRef(),
+      redirect: false
+    };
   }
 
   handleSubmit = event => {
     event.preventDefault();
-    // console.log(this.inputOptionOne.current.value);
-    // console.log(this.inputOptionTwo.current.value);
+    const { dispatch, authedUser } = this.props;
+    const { inputOptionOne, inputOptionTwo } = this.state;
+    dispatch(
+      handleCreateQuestion(
+        inputOptionOne.current.value,
+        inputOptionTwo.current.value,
+        authedUser
+      )
+    );
+    this.setState({ redirect: true });
   };
 
   render() {
+    const { inputOptionOne, inputOptionTwo, redirect } = this.state;
+    if (redirect) {
+      return <Redirect to="/" />;
+    }
     return (
       <div>
         <form>
@@ -23,14 +40,14 @@ class CreateQuestion extends Component {
           <p>Complete the question</p>
           <h4>Would you rather...</h4>
           <input
-            ref={this.inputOptionOne}
+            ref={inputOptionOne}
             name="optionOne"
             type="text"
             placeholder="Option One Text"
           />
           <p>OR</p>
           <input
-            ref={this.inputOptionTwo}
+            ref={inputOptionTwo}
             name="optionTwo"
             type="text"
             placeholder="Option Two Text"
@@ -44,4 +61,8 @@ class CreateQuestion extends Component {
   }
 }
 
-export default connect()(CreateQuestion);
+function mapStateToProps({ authedUser }) {
+  return { authedUser };
+}
+
+export default connect(mapStateToProps)(CreateQuestion);
