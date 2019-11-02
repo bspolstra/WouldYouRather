@@ -3,19 +3,16 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 function mapStateToProps({ questions, authedUser }) {
-  //TODO: delete test data
-  const testUser = "tylermcginnis";
   const polls = Object.values(questions);
   const answered = polls.filter(
     q =>
-      q.optionOne.votes.includes(testUser) ||
-      q.optionTwo.votes.includes(testUser)
+      q.optionOne.votes.includes(authedUser) ||
+      q.optionTwo.votes.includes(authedUser)
   );
 
-  const unanswered = polls.filter(q => !answered.includes(q));
   return {
     answered,
-    unanswered
+    unanswered: polls.filter(q => !answered.includes(q))
   };
 }
 
@@ -42,8 +39,6 @@ class Polls extends Component {
           </ul>
         </div>
         {currentList.map(p => {
-          //TODO: add event to navigate to Poll
-          console.log(p.id);
           return (
             <div key={p.id}>
               <Link to={`/poll/${p.id}`}>
