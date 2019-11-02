@@ -1,13 +1,21 @@
-import { SET_USERS, SET_ANSWER, ADD_QUESTION } from "../util/constants";
+import { SET_USERS, SAVE_ANSWER } from "../util/constants";
 
 export default function users(state = {}, action) {
   switch (action.type) {
     case SET_USERS:
       return { ...state, ...action.users };
-    case SET_ANSWER:
-      return state;
-    case ADD_QUESTION:
-      return state;
+    case SAVE_ANSWER:
+      const { qid, authedUser, answer } = action;
+      return {
+        ...state,
+        [authedUser]: {
+          ...state[authedUser],
+          answers: {
+            ...state[authedUser].answers,
+            [qid]: answer
+          }
+        }
+      };
     default:
       return state;
   }
