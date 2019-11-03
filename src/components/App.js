@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { handleInitializeData } from "../actions/shared";
 import Polls from "./Polls";
 import Poll from "./Poll";
 import Leaderboard from "./Leaderboard";
 import CreateQuestion from "./CreateQuestion";
 import { connect } from "react-redux";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import Nav from "./Nav";
 import Login from "./Login";
 import NotFound from "./NotFound";
@@ -16,36 +16,36 @@ class App extends Component {
   }
 
   render() {
-    const { loggedIn } = this.props;
+    const { loggedIn, location } = this.props;
+
+    if (!loggedIn) {
+      return (
+        <Fragment>
+          <Nav />
+          <Login redirectPath={location.pathname} />
+        </Fragment>
+      );
+    }
+
     return (
-      <div>
+      <Fragment>
         <Nav />
-        <Route exact path="/">
-          {loggedIn ? <Polls /> : <Redirect to="/login" />}
-        </Route>
-        <Route
-          path="/poll/:id"
-          render={props =>
-            loggedIn ? <Poll {...props} /> : <Redirect to="/login" />
-          }
-        />
-        <Route path="/leaderboard">
-          {loggedIn ? <Leaderboard /> : <Redirect to="/login" />}
-        </Route>
-        <Route path="/add">
-          {loggedIn ? <CreateQuestion /> : <Redirect to="/login" />}
-        </Route>
-        <Route path="/login" component={Login} />
-        <Route path="/notfound">
-          {loggedIn ? <NotFound /> : <Redirect to="/login" />}
-        </Route>
-      </div>
+        <Switch>
+          <Route exact path="/" component={Polls} />
+          <Route path="/questions/:id" render={props => <Poll {...props} />} />
+          <Route path="/leaderboard" component={Leaderboard} />
+          <Route path="/add" component={CreateQuestion} />
+          <Route component={NotFound} />
+        </Switch>
+      </Fragment>
     );
   }
 }
 
 function mapStateToProps({ authedUser }) {
-  return { loggedIn: authedUser !== null };
+  return {
+    loggedIn: authedUser !== null
+  };
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(withRouter(App));
