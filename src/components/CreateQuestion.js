@@ -36,25 +36,32 @@ class CreateQuestion extends Component {
     return (
       <div>
         <form>
-          <h1>Create New Question</h1>
-          <p>Complete the question</p>
-          <h4>Would you rather...</h4>
-          <input
-            ref={inputOptionOne}
-            name="optionOne"
-            type="text"
-            placeholder="Option One Text"
-          />
-          <p>OR</p>
-          <input
-            ref={inputOptionTwo}
-            name="optionTwo"
-            type="text"
-            placeholder="Option Two Text"
-          />
-          <button onClick={e => this.handleSubmit(e)} type="submit">
-            SUBMIT
-          </button>
+          <h2 className="text-center">Create New Question</h2>
+          <h5 className=" text-center">Would you rather...</h5>
+          <div class="form-group">
+            <input
+              type="text"
+              ref={inputOptionOne}
+              class="form-control"
+              placeholder="Option One Text"
+            />
+            <h6 className="text-center or">...OR...</h6>
+            <input
+              ref={inputOptionTwo}
+              type="text"
+              class="form-control"
+              placeholder="Option Two Text"
+            />
+          </div>
+          <div className="text-center">
+            <button
+              className="btn btn-primary"
+              onClick={e => this.handleSubmit(e)}
+              type="submit"
+            >
+              SUBMIT
+            </button>
+          </div>
         </form>
       </div>
     );

@@ -5,32 +5,37 @@ import { Redirect } from "react-router-dom";
 
 class Login extends Component {
   state = {
-    selectedValue: "",
+    selectedUser: "",
     redirect: false
   };
 
   handleChange = e => {
-    this.setState({ selectedValue: e.target.value });
+    this.setState({ selectedUser: e.target.value });
   };
 
   handleClick = () => {
-    const { selectedValue } = this.state;
-    if (selectedValue !== "") {
-      this.props.dispatch(setAuthedUser(selectedValue));
+    const { selectedUser } = this.state;
+    if (selectedUser !== "") {
+      this.props.dispatch(setAuthedUser(selectedUser));
       this.setState({ redirect: true });
     }
   };
   render() {
-    const { users } = this.props;
+    const { users, redirectPath } = this.props;
     const { redirect } = this.state;
-    if (redirect) {
-      return <Redirect to="/" />;
+
+    if (redirect && redirectPath) {
+      return <Redirect />;
     }
 
     return (
       <div>
-        <div>
-          <select onChange={e => this.handleChange(e)}>
+        <h2 className="text-center">Who Are You?</h2>
+        <div className="form-group">
+          <select
+            className="custom-select"
+            onChange={e => this.handleChange(e)}
+          >
             <option key="" value=""></option>
             {users.map(user => (
               <option key={user.id} value={user.id}>
@@ -38,7 +43,11 @@ class Login extends Component {
               </option>
             ))}
           </select>
-          <button onClick={this.handleClick}>Login</button>
+        </div>
+        <div className="text-center">
+          <button onClick={this.handleClick} className="btn btn-primary">
+            Login
+          </button>
         </div>
       </div>
     );

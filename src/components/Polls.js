@@ -33,22 +33,37 @@ class Polls extends Component {
     const currentList = toggle === "unanswered" ? unanswered : answered;
 
     return (
-      <div>
-        <div>
-          <ul>
-            <li onClick={() => this.handleClick("unanswered")}>Polls</li>
-            <li onClick={() => this.handleClick("answered")}>Answered</li>
-          </ul>
+      <div class="container">
+        <h2 className="text-center">Choose A Question</h2>
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <label
+            id="unansweredBtn"
+            class={`btn btn-primary ${toggle === "unanswered" && "active"}`}
+            onClick={() => this.handleClick("unanswered")}
+          >
+            Unanswered
+          </label>
+          <label
+            id="answeredBtn"
+            class={`btn btn-primary ${toggle === "answered" && "active"}`}
+            onClick={() => this.handleClick("answered")}
+          >
+            Answered
+          </label>
         </div>
-        {currentList.map(p => {
-          return (
-            <div key={p.id}>
-              <Link to={`/questions/${p.id}`}>
+        <div class="list-group">
+          {currentList.map(p => {
+            return (
+              <Link
+                key={p.id}
+                className="text-center list-group-item list-group-item-action"
+                to={`/questions/${p.id}`}
+              >
                 ...{p.optionOne.text.substring(0, 15)}...
               </Link>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     );
   }

@@ -6,6 +6,11 @@ import { handleSaveAnswer } from "../actions/questions";
 
 function mapStateToProps({ questions, users, authedUser }, { match }) {
   const id = match.params.id;
+
+  if (!questions[id]) {
+    return { author: null, id };
+  }
+
   const optionOneVotes = get(questions[id], "optionOne.votes");
   const optionTwoVotes = get(questions[id], "optionTwo.votes");
   const authedUserVote = optionOneVotes.includes(authedUser)
@@ -35,11 +40,22 @@ class Poll extends Component {
   unansweredPoll = ({ optionOne, optionTwo }) => {
     return (
       <Fragment>
-        <p>Would you rather....</p>
-        <p onClick={() => this.handleClick("optionOne")}>
-          ... {optionOne} or...
-        </p>
-        <p onClick={() => this.handleClick("optionTwo")}>... {optionTwo}?</p>
+        <h5 className="card-text">Would you rather....</h5>
+        <div className="row center-block">
+          <button
+            className="btn btn-primary col-md"
+            onClick={() => this.handleClick("optionOne")}
+          >
+            {optionOne}
+          </button>
+          <p className="card-text col-md">...or...</p>
+          <button
+            className="btn btn-primary col-md"
+            onClick={() => this.handleClick("optionTwo")}
+          >
+            {optionTwo}?
+          </button>
+        </div>
       </Fragment>
     );
   };
@@ -56,36 +72,38 @@ class Poll extends Component {
     const optionTwoVotePercent = (optionTwoVoteCount / userCount) * 100;
     return (
       <Fragment>
-        <div>
-          <p
-            style={
-              authedUserVote === "optionOne"
-                ? { fontWeight: "bold" }
-                : { fontWeight: "normal" }
-            }
-          >
-            .... {optionOne} ...
-          </p>
-          <p>
-            {optionOneVoteCount} out of {userCount}
-          </p>
-          <p>{optionOneVotePercent.toFixed(1)}</p>
-        </div>
-        <div>
-          <p
-            style={
-              authedUserVote === "optionTwo"
-                ? { fontWeight: "bold" }
-                : { fontWeight: "normal" }
-            }
-          >
-            ... {optionTwo} ...
-          </p>
-          <p>
-            {optionTwoVoteCount} out of {userCount}
-          </p>
-          <p>{optionTwoVotePercent.toFixed(1)}</p>
-        </div>
+        <ul className="list-group">
+          <li className="list-group-item">
+            <p
+              style={
+                authedUserVote === "optionOne"
+                  ? { fontWeight: "bold" }
+                  : { fontWeight: "normal" }
+              }
+            >
+              ... {optionOne} ...
+            </p>
+            <p>
+              {optionOneVoteCount} users have voted this out of {userCount}
+            </p>
+            <p>{optionOneVotePercent.toFixed(1)} of all users</p>
+          </li>
+          <li className="list-group-item">
+            <p
+              style={
+                authedUserVote === "optionTwo"
+                  ? { fontWeight: "bold" }
+                  : { fontWeight: "normal" }
+              }
+            >
+              ... {optionTwo} ...
+            </p>
+            <p>
+              {optionTwoVoteCount} users have voted this out of {userCount}
+            </p>
+            <p>{optionTwoVotePercent.toFixed(1)} of all users</p>
+          </li>
+        </ul>
       </Fragment>
     );
   };
@@ -98,13 +116,19 @@ class Poll extends Component {
 
     const { name, avatarURL } = author;
     return (
-      <Fragment>
-        <img src={avatarURL} alt={`Avatar of ${name}`} className="avatar" />
-        <p>Asked by {name}</p>
-        {authedUserVote
-          ? this.answeredPoll(this.props)
-          : this.unansweredPoll(this.props)}
-      </Fragment>
+      <div className="container">
+        <div className="card flex-wrap container-fluid">
+          <div class="card-header border-0">
+            <img src={avatarURL} alt={`Avatar of ${name}`} className="avatar" />
+          </div>
+          <div class="card-block px-2 text-center ">
+            <h4 class="card-title">{name} asks:</h4>
+            {authedUserVote
+              ? this.answeredPoll(this.props)
+              : this.unansweredPoll(this.props)}
+          </div>
+        </div>
+      </div>
     );
   }
 }

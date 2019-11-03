@@ -23,20 +23,28 @@ function mapStateToProps({ users }) {
 
 const Leaderboard = props => {
   return (
-    <div>
-      {props.board.map(player => (
-        <div key={player.id}>
-          <img
-            src={player.avatarURL}
-            alt={`Avatar of ${player.name}`}
-            className="avatar"
-          />
-          <div>Name: {player.name}</div>
-          <div>Answered questions: {player.numOfAnswers}</div>
-          <div>Questions created: {player.numOfAsked}</div>
-          <div>Score: {player.score}</div>
-        </div>
-      ))}
+    <div className="container-cards">
+      <div className="row" id="leaderboard">
+        {props.board.map(player => (
+          <div key={player.id} className="card mb-3 col-md">
+            <h3 class="card-header">{player.name}</h3>
+            <img
+              src={player.avatarURL}
+              alt={`Avatar of ${player.name}`}
+              className="avatar"
+            />
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                Answered questions: {player.numOfAnswers}
+              </li>
+              <li class="list-group-item">
+                Questions created: {player.numOfAsked}
+              </li>
+              <li class="list-group-item">Score: {player.score}</li>
+            </ul>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
